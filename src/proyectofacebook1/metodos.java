@@ -12,8 +12,10 @@ import facebook4j.FacebookFactory;
 import facebook4j.ResponseList;
 import facebook4j.User;
 import facebook4j.auth.AccessToken;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.attribute.standard.Media;
 import javax.swing.JOptionPane;
 
 /**
@@ -53,10 +55,11 @@ public class metodos {
         }
 
     }
-/**
- * publicar un POST
- *
- */
+
+    /**
+     * publicar un POST
+     *
+     */
     public void publicar() {
         /**
          * @param estado
@@ -69,14 +72,15 @@ public class metodos {
         }
 
     }
-/**
- * Buscar personas introduciendo su nombre
- */
+
+    /**
+     * Buscar personas introduciendo su nombre
+     */
     public void buscarPersonas() {
         /**
          * @param resultado guarda los nombres que se han buscado
          * @param nombre nombre que deseas buscar
-         * 
+         *
          */
         try {
             String resultado = "";
@@ -93,37 +97,51 @@ public class metodos {
         }
     }
 
-   /**
-    * comentar un POST
-    */ 
-     public void comentarEstado() {
-           /**
-            * @param IdPost id del post que se quiere comentar
-            * @param comentario compentario que se quiere publicar
-            */         
+    /**
+     * comentar un POST
+     */
+    public void comentarEstado() {
+        /**
+         * @param IdPost id del post que se quiere comentar
+         * @param comentario compentario que se quiere publicar
+         */
         try {
-            String IdPost=JOptionPane.showInputDialog("Introduce el ID del post");
-            String comentario=JOptionPane.showInputDialog("Introduce el comentario");
-            facebook.commentPost(IdPost,comentario);
-            JOptionPane.showMessageDialog(null,"Has comentado el estado");
+            String IdPost = JOptionPane.showInputDialog("Introduce el ID del post");
+            String comentario = JOptionPane.showInputDialog("Introduce el comentario");
+            facebook.commentPost(IdPost, comentario);
+            JOptionPane.showMessageDialog(null, "Has comentado el estado");
         } catch (FacebookException ex) {
             Logger.getLogger(metodos.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }
-     /**
-      * Darle un LIKE  a un POST
-      */
-         public void likePost(){
-         /**
-          * @param postid Id del post al que se quiere dar me gusta
-          */           
+
+    /**
+     * Darle un LIKE a un POST
+     */
+    public void likePost() {
+        /**
+         * @param postid Id del post al que se quiere dar me gusta
+         */
         try {
-            String postid=JOptionPane.showInputDialog("Introduce el ID del post");
+            String postid = JOptionPane.showInputDialog("Introduce el ID del post");
             facebook.likePost(postid);
-           
+
         } catch (FacebookException ex) {
             Logger.getLogger(metodos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+/**
+ * imprime los comentarios que tenga un Post
+ */
+    public void comentariosPost() {
+        ResponseList<Comment> comments = null;
+        String idPost = JOptionPane.showInputDialog("Introduce el ID del post");
+        comments = Facebook.getPostComments(idPost);
+        for (int i = 0; i < comments.size(); i++) {
+            Comment m = comments.get(i);
+            System.out.println(m.getMessage());
+        }
+    }
+
 }
